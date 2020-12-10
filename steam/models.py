@@ -10,3 +10,12 @@ class LastUnlockAchievement(models.Model):
 class App(models.Model):
     app_id = models.IntegerField()
     name = models.CharField(max_length=256)
+
+
+class Achievement(models.Model):
+    app = models.ForeignKey(App, on_delete=models.CASCADE)
+    api_name = models.CharField(max_length=256)
+    achieved = models.BooleanField()
+    unlock_time = models.DateTimeField()
+    name = models.CharField(max_length=256)
+    description = models.CharField(max_length=256)

@@ -1,15 +1,18 @@
 import json
 import os
+from datetime import datetime
 
 import requests
 from django.core.management import BaseCommand
+from django.utils.timezone import make_aware
 
-from steam.models import App
+from steam.models import App, Achievement
 
 STEAM_API_KEY = os.environ.get("STEAM_API_KEY")
 STEAM_ID = os.environ.get("STEAM_ID")
 RECENTLY_URL = "http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key={}&steamid={}&format=json"
 PLAYER_ACHIEVEMENTS_URL = "http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={}&key={}&steamid={}&l=japanese"
+
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -27,7 +30,7 @@ class Command(BaseCommand):
         for game in recently["response"]["games"]:
             print(game)
             try:
-                App.objects.get(app_id=game["appid"])
+                app = App.objects.get(app_id=game["appid"])
             except App.DoesNotExist:
                 app = App(app_id=game["appid"], name=game["name"])
                 app.save()
@@ -49,7 +52,16 @@ class Command(BaseCommand):
 
             achievements = player_stats["achievements"]
             print(achievements)
-
+            for achievement in achievements:
+                try:
+                    achieve = Achievement.objects.get(app=app, api_name=achievement["apiname"])
+                except Achievement.DoesNotExist:
+                    achieve = Achievement(app=app, api_name=achievement["apiname"])
+                achieve.name = achievement["name"]
+                achieve.achieved = bool(achievement["achieved"])
+                achieve.unlock_time = make_aware(datetime.fromtimestamp(achievement["unlocktime"]))
+                achieve.description = achievement["description"]
+                achieve.save()
 
 # import pickle
 # import time
