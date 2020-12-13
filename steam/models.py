@@ -19,3 +19,5 @@ class Achievement(models.Model):
     unlock_time = models.DateTimeField()
     name = models.CharField(max_length=256)
     description = models.CharField(max_length=256)
+    icon = models.URLField()
+    hidden = models.BooleanField()
