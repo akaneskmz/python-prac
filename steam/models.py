@@ -28,3 +28,8 @@ class Achievement(models.Model):
 class OwnedGames(models.Model):
     """所持ゲーム"""
     data = models.JSONField()
+
+
+class GameList(models.Model):
+    """ゲームリスト"""
+    data = models.JSONField()
