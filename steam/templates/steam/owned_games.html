@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>所持ゲームリスト</title>
-</head>
-<body>
+{% extends 'steam/base.html' %}
+
+{% block title %}所持ゲームリスト{% endblock %}
+
+{% block content %}
 <h5>{{ data.game_count }}</h5>
 <ol>
     {% for game in data.games %}
     <li>{{ game.appid }}</li>
     {% endfor %}
 </ol>
-</body>
-</html>
+{% endblock %}
