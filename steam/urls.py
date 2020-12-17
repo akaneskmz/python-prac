@@ -14,4 +14,5 @@ from steam import views
 
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
+    path("owned_games/", views.OwnedGamesView.as_view(), name="owned_games"),
 ]
