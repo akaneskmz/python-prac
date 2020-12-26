@@ -3,7 +3,9 @@ import os
 import requests
 from django.core.management import BaseCommand, CommandError
 
+from steam.constants import INVALID_APPS
 from steam.models import OwnedGames, GameList
+from steam.utils import get_app_details
 
 STEAM_API_KEY = os.environ.get("STEAM_API_KEY")
 STEAM_ID = os.environ.get("STEAM_ID")
@@ -30,9 +32,16 @@ class Command(BaseCommand):
 
         def get_app_name(app_id):
             """appidからゲーム名取得"""
+            # APIで取得できないゲーム
+            if app_id in INVALID_APPS:
+                return INVALID_APPS[app_id].get("name")
+
             for app in apps:
                 if app["appid"] == app_id:
                     return app["name"]
+            app_detail = get_app_details(app_id)
+            if app_detail.get("name"):
+                return app_detail["name"]
             return None
 
         # 保存済みリスト取得
