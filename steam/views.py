@@ -17,5 +17,9 @@ class OwnedGamesView(TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         owned_games = OwnedGames.objects.first()
-        ctx["data"] = owned_games.data
+        data = owned_games.data
+        ctx["game_count"] = data["game_count"]
+
+        sort_key = lambda x: x.get("name") or ""
+        ctx["games"] = sorted(data["games"], key=sort_key)
         return ctx

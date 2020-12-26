@@ -3,10 +3,10 @@
 {% block title %}所持ゲームリスト{% endblock %}
 
 {% block content %}
-<h5>{{ data.game_count }}</h5>
+<h5>{{ game_count }}</h5>
 <ol>
-    {% for game in data.games %}
-    <li>{{ game.appid }}</li>
+    {% for game in games %}
+    <li><a href="https://store.steampowered.com/app/{{ game.appid }}/" target="_blank">{{ game.name }}</a></li>
     {% endfor %}
 </ol>
 {% endblock %}
