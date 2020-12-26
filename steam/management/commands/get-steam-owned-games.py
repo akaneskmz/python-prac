@@ -1,4 +1,5 @@
 import os
+import random
 
 import requests
 from django.core.management import BaseCommand, CommandError
@@ -10,10 +11,14 @@ from steam.utils import get_app_details
 STEAM_API_KEY = os.environ.get("STEAM_API_KEY")
 STEAM_ID = os.environ.get("STEAM_ID")
 GET_OWNED_GAMES_URL = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={}&steamid={}&format=json"
+API_COUNT_MAX = 10
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        # API使用回数
+        api_count = 0
+
         # 所持ゲーム取得
         print(GET_OWNED_GAMES_URL)
         res = requests.get(GET_OWNED_GAMES_URL.format(STEAM_API_KEY, STEAM_ID))
@@ -65,13 +70,20 @@ class Command(BaseCommand):
         # 保存用データ作成
         new_owned_games = {"game_count": owned_games["game_count"], "games": []}
 
-        for owned_game in owned_games["games"]:
+        for owned_game in random.sample(owned_games["games"], len(owned_games["games"])):
             game_data = get_owned_game_old(owned_game["appid"])
             game_data.update(owned_game)
 
             # ゲーム名追加
             if not game_data.get("name"):
                 game_data["name"] = get_app_name(game_data["appid"])
+
+            # 詳細情報取得
+            if not game_data.get("header_image"):
+                if api_count < API_COUNT_MAX:
+                    app_details = get_app_details(game_data["appid"])
+                    api_count += 1
+                    game_data["header_image"] = app_details.get("header_image")
 
             new_owned_games["games"].append(game_data)
 
