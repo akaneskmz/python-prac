@@ -83,7 +83,9 @@ class Command(BaseCommand):
                 if api_count < API_COUNT_MAX:
                     app_details = get_app_details(game_data["appid"])
                     api_count += 1
-                    game_data["header_image"] = app_details.get("header_image")
+                    if app_details:
+                        game_data["name"] = app_details.get("name")
+                        game_data["header_image"] = app_details.get("header_image")
 
             new_owned_games["games"].append(game_data)
 
