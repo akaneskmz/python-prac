@@ -12,6 +12,7 @@ class IndexView(ListView):
 
 
 class OwnedGamesView(TemplateView):
+    """所持ゲームリスト"""
     template_name = "steam/owned_games.html"
 
     def get_context_data(self, **kwargs):
@@ -20,6 +21,6 @@ class OwnedGamesView(TemplateView):
         data = owned_games.data
         ctx["game_count"] = data["game_count"]
 
-        sort_key = lambda x: x.get("name") or ""
+        sort_key = lambda x: x.get("name").upper() or ""
         ctx["games"] = sorted(data["games"], key=sort_key)
         return ctx
