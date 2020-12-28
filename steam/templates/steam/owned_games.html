@@ -6,7 +6,10 @@
 <h5>{{ game_count }}</h5>
 <ol>
     {% for game in games %}
-    <li>{% if game.header_image %}<img src="{{game.header_image}}">{% endif %}<a href="https://store.steampowered.com/app/{{ game.appid }}/" target="_blank">{{ game.name }}</a></li>
+    <li>
+        <img src="{% if game.header_image %}{{game.header_image}}{% else %}{% url 'alt_image' game.name|urlencode:'' %}{% endif %}" height="43" width="92" alt="{{ game.name }}">
+        <a href="https://store.steampowered.com/app/{{ game.appid }}/" target="_blank">{{ game.name }}</a>
+    </li>
     {% endfor %}
 </ol>
 {% endblock %}

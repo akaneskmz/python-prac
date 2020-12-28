@@ -15,4 +15,5 @@ from steam import views
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
     path("owned_games/", views.OwnedGamesView.as_view(), name="owned_games"),
+    path("alt_image/<str:title>/", views.AltImageView.as_view(), name="alt_image"),
 ]
