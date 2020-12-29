@@ -1,0 +1,22 @@
+{% extends 'steam/base.html' %}
+
+{% block title %}所持ゲームリスト{% endblock %}
+
+{% block header_css %}
+<style type="text/css">
+li {
+    display: inline-block;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<h5>{{ game_count }}</h5>
+<ul>
+    {% for game in games %}<li>
+        <a href="https://store.steampowered.com/app/{{ game.appid }}/" target="_blank">
+            <img src="{% if game.header_image %}{{game.header_image}}{% else %}{% url 'alt_image' game.name|urlencode:'' %}{% endif %}" height="43" width="92" title="{{ game.name }}">
+        </a>
+    </li>{% endfor %}
+</ul>
+{% endblock %}

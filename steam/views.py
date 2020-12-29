@@ -30,6 +30,14 @@ class OwnedGamesView(TemplateView):
         ctx["games"] = sorted(data["games"], key=sort_key)
         return ctx
 
+    def get_template_names(self):
+        query_dict = {key: self.request.GET.get(key) for key in dict(self.request.GET).keys()}
+
+        if query_dict.get("t") == "i":
+            return "steam/owned_games_image.html"
+        else:
+            return super().get_template_names()
+
 
 class AltImageView(View):
     """代替画像"""
