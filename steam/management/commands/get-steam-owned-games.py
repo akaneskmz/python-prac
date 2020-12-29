@@ -95,6 +95,7 @@ class Command(BaseCommand):
             new_owned_games["games"].append(game_data)
 
         # データ保存
+        print(f"API remains: {API_COUNT_MAX-api_count}")
         print(f"size: {len(json.dumps(new_owned_games))}")
         if own:
             own.data = new_owned_games
