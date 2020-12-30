@@ -13,7 +13,7 @@ from steam.models import Achievement, OwnedGames
 
 class IndexView(ListView):
     template_name = "steam/index.html"
-    queryset = Achievement.objects.filter(achieved=True).order_by('-unlock_time')
+    queryset = Achievement.objects.filter(achieved=True).order_by('-unlock_time')[:100]
 
 
 class OwnedGamesView(TemplateView):
