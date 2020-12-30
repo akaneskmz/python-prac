@@ -1,4 +1,5 @@
 import io
+import textwrap
 from urllib.parse import unquote
 
 from PIL import Image, ImageDraw, ImageFont
@@ -47,7 +48,7 @@ class AltImageView(View):
         im = Image.new("RGB", (460, 215), (128, 128, 128))
         draw = ImageDraw.Draw(im)
         font = ImageFont.truetype('./steam/fonts/meiryo003.ttf', 48)
-        draw.multiline_text((0, 0), title, fill=(0, 0, 0), font=font)
+        draw.multiline_text((0, 0), "\n".join(textwrap.wrap(title, 16)), fill=(0, 0, 0), font=font)
 
         output = io.BytesIO()
         im.save(output, format="PNG")
