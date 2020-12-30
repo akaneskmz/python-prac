@@ -6,7 +6,7 @@ import requests
 from django.core.management import BaseCommand
 from django.utils.timezone import make_aware
 
-from steam.models import App, Achievement
+from steam.models import App, Achievement, LastUnlockAchievement
 
 STEAM_API_KEY = os.environ.get("STEAM_API_KEY")
 STEAM_ID = os.environ.get("STEAM_ID")
@@ -18,6 +18,12 @@ PLAYER_ACHIEVEMENTS_URL = "http://api.steampowered.com/ISteamUserStats/GetPlayer
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        last_unlock_achievement = LastUnlockAchievement.objects.first()
+        last_unlock_time = last_unlock_achievement.last_unlock_time if last_unlock_achievement else 0
+        print(f'last unlock time: {last_unlock_time}')
+        now_time = int(datetime.now().timestamp())
+        print(f'now time: {now_time}')
+
         print(RECENTLY_URL)
         res = requests.get(RECENTLY_URL.format(STEAM_API_KEY, STEAM_ID))
 
@@ -67,6 +73,9 @@ class Command(BaseCommand):
                     schema = {}
                 try:
                     achieve = Achievement.objects.get(app=app, api_name=achievement["apiname"])
+                    # 登録済みの場合スキップ
+                    if achievement["unlocktime"] < last_unlock_time:
+                        continue
                 except Achievement.DoesNotExist:
                     achieve = Achievement(app=app, api_name=achievement["apiname"])
                 achieve.name = achievement["name"]
@@ -76,3 +85,11 @@ class Command(BaseCommand):
                 achieve.icon = schema.get("icon")
                 achieve.hidden = bool(schema.get("hidden"))
                 achieve.save()
+
+        # 最終取得時間を更新
+        if last_unlock_achievement:
+            last_unlock_achievement.last_unlock_time = now_time
+        else:
+            last_unlock_achievement = LastUnlockAchievement(last_unlock_time=now_time)
+        last_unlock_achievement.save()
+        print(f'end: {last_unlock_achievement.last_unlock_time}')
