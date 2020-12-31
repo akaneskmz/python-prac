@@ -7,6 +7,7 @@ from django.core.management import BaseCommand
 from django.utils.timezone import make_aware
 
 from steam.models import App, Achievement, LastUnlockAchievement
+from steam.utils import achieve_unlock_tweet
 
 STEAM_API_KEY = os.environ.get("STEAM_API_KEY")
 STEAM_ID = os.environ.get("STEAM_ID")
@@ -23,6 +24,9 @@ class Command(BaseCommand):
         print(f'last unlock time: {last_unlock_time}')
         now_time = int(datetime.now().timestamp())
         print(f'now time: {now_time}')
+
+        # 新規実績
+        new_achieve = False
 
         print(RECENTLY_URL)
         res = requests.get(RECENTLY_URL.format(STEAM_API_KEY, STEAM_ID))
@@ -86,6 +90,10 @@ class Command(BaseCommand):
                 achieve.hidden = bool(schema.get("hidden"))
                 achieve.save()
 
+                # 新規実績あり
+                if achievement["unlocktime"] > last_unlock_time:
+                    new_achieve = True
+
         # 最終取得時間を更新
         if last_unlock_achievement:
             last_unlock_achievement.last_unlock_time = now_time
@@ -93,3 +101,7 @@ class Command(BaseCommand):
             last_unlock_achievement = LastUnlockAchievement(last_unlock_time=now_time)
         last_unlock_achievement.save()
         print(f'end: {last_unlock_achievement.last_unlock_time}')
+
+        # 新規実績ツイート
+        if new_achieve:
+            achieve_unlock_tweet(last_unlock_time)
