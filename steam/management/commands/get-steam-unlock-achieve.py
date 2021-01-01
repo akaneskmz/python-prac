@@ -94,6 +94,12 @@ class Command(BaseCommand):
                 if achievement["unlocktime"] > last_unlock_time:
                     new_achieve = True
 
+        # 新規実績ツイート
+        if new_achieve:
+            result = achieve_unlock_tweet(last_unlock_time)
+            if not result:
+                return
+
         # 最終取得時間を更新
         if last_unlock_achievement:
             last_unlock_achievement.last_unlock_time = now_time
@@ -101,7 +107,3 @@ class Command(BaseCommand):
             last_unlock_achievement = LastUnlockAchievement(last_unlock_time=now_time)
         last_unlock_achievement.save()
         print(f'end: {last_unlock_achievement.last_unlock_time}')
-
-        # 新規実績ツイート
-        if new_achieve:
-            achieve_unlock_tweet(last_unlock_time)
