@@ -100,3 +100,6 @@ def achieve_unlock_tweet(last_unlock_time):
             if tweet_res.status_code != 200:
                 print(f"tweet error: {res.text}")
                 return False
+
+        # 正常終了
+        return True
