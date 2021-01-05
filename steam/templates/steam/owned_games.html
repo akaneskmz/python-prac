@@ -9,7 +9,7 @@
     <tbody>
     {% for game in games %}
     <tr>
-        <td>{{ forloop.counter }}</td>
+        <td class="text-right">{{ forloop.counter }}</td>
         <td><a href="https://store.steampowered.com/app/{{ game.appid }}/" target="_blank"><img src="{% if game.header_image %}{{game.header_image}}{% else %}{% url 'alt_image' game.name|urlencode:'' %}{% endif %}" height="43" width="92" alt="{{ game.name }}"></a></td>
         <td>{{ game.name }}</td>
         <td class="text-right">{% if game.price_overview %}{{ game.price_overview.initial|price:game.price_overview.currency }}{% endif %}</td>
