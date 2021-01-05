@@ -12,7 +12,7 @@ from steam.utils import get_app_details
 STEAM_API_KEY = os.environ.get("STEAM_API_KEY")
 STEAM_ID = os.environ.get("STEAM_ID")
 GET_OWNED_GAMES_URL = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={}&steamid={}&format=json"
-API_COUNT_MAX = 100
+API_COUNT_MAX = 50
 
 
 class Command(BaseCommand):
@@ -82,15 +82,21 @@ class Command(BaseCommand):
                 game_data["name"] = get_app_name(appid)
 
             # 詳細情報取得
-            if not game_data.get("name") or not game_data.get("header_image"):
+            if not game_data.get("name") or not game_data.get("header_image") or not game_data.get("price_overview"):
                 if game_data["appid"] in INVALID_APPS:
                     game_data["header_image"] = INVALID_APPS[appid].get("header_image")
+                    game_data["price_overview"] = INVALID_APPS[appid].get("price_overview")
                 elif api_count < API_COUNT_MAX:
                     app_details = get_app_details(appid)
                     api_count += 1
                     if app_details:
                         game_data["name"] = app_details.get("name")
                         game_data["header_image"] = app_details.get("header_image")
+                        # 価格があれば取得
+                        if app_details.get("price_overview"):
+                            price_overview = {key: app_details.get("price_overview").get(key) for key in
+                                              ["currency", "initial"]}
+                            game_data["price_overview"] = price_overview
 
             new_owned_games["games"].append(game_data)
 

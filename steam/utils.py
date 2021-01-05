@@ -21,22 +21,26 @@ TWITTER_STATUS_UPDATE_URL = "https://api.twitter.com/1.1/statuses/update.json"
 TWEET_ACHIEVE_TAG = os.environ.get("TWEET_ACHIEVE_TAG")
 
 
-def get_app_details(appids: int, cc="us") -> dict:
+def get_app_details(appids: int, ccs="jp,,us") -> dict:
     """ゲーム詳細情報取得"""
-    params = {"appids": appids, "cc": cc}
-    res = requests.get(STEAM_APP_DETAILS_URL, params)
+    for cc in ccs.split(","):
+        params = {"appids": appids}
+        if cc:
+            params["cc"] = cc
+        res = requests.get(STEAM_APP_DETAILS_URL, params)
 
-    if res.status_code != 200:
-        print("get apps details error: {}, {}".format(appids, res.status_code))
-        return {}
+        if res.status_code != 200:
+            print("get apps details error: {}, {}, {}".format(appids, cc, res.status_code))
+            continue
 
-    detail = res.json().get(str(appids))
+        detail = res.json().get(str(appids))
 
-    if not detail["success"]:
-        print("get apps details error: {}, {}".format(appids, detail))
-        return {}
+        if not detail["success"]:
+            print("get apps details error: {}, {}, {}".format(appids, cc, detail))
+            continue
 
-    return detail.get("data")
+        return detail.get("data")
+    return {}
 
 
 def achieve_unlock_tweet(last_unlock_time):
