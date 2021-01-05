@@ -8,8 +8,8 @@
     <tbody>
     {% for game in games %}
     <tr>
-        <td><img src="{% if game.header_image %}{{game.header_image}}{% else %}{% url 'alt_image' game.name|urlencode:'' %}{% endif %}" height="43" width="92" alt="{{ game.name }}"></td>
-        <td><a href="https://store.steampowered.com/app/{{ game.appid }}/" target="_blank">{{ game.name }}</a></td>
+        <td><a href="https://store.steampowered.com/app/{{ game.appid }}/" target="_blank"><img src="{% if game.header_image %}{{game.header_image}}{% else %}{% url 'alt_image' game.name|urlencode:'' %}{% endif %}" height="43" width="92" alt="{{ game.name }}"></a></td>
+        <td>{{ game.name }}</td>
         <td>{% if game.price_overview %}{{ game.price_overview.currency }} {{ game.price_overview.initial }}{% endif %}</td>
     </tr>
     {% endfor %}
