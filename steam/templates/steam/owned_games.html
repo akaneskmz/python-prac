@@ -4,14 +4,25 @@
 {% block title %}所持ゲームリスト{% endblock %}
 
 {% block content %}
-<h5>{{ game_count }}</h5>
 <table class="table table-dark">
+    <thead>
+    <tr>
+        <th>No.</th>
+        <th>バナー</th>
+        <th>ゲーム名</th>
+        <th>開発元</th>
+        <th>パブリッシャー</th>
+        <th>価格</th>
+    </tr>
+    </thead>
     <tbody>
     {% for game in games %}
     <tr>
         <td class="text-right">{{ forloop.counter }}</td>
         <td><a href="https://store.steampowered.com/app/{{ game.appid }}/" target="_blank"><img src="{% if game.header_image %}{{game.header_image}}{% else %}{% url 'alt_image' game.name|urlencode:'' %}{% endif %}" height="43" width="92" alt="{{ game.name }}"></a></td>
         <td>{{ game.name }}</td>
+        <td>{% if game.developers %}{{ game.developers|join:"<br />" }}{% endif %}</td>
+        <td>{% if game.publishers %}{{ game.publishers|join:"<br />" }}{% endif %}</td>
         <td class="text-right">{% if game.price_overview %}{{ game.price_overview.initial|price:game.price_overview.currency }}{% endif %}</td>
     </tr>
     {% endfor %}

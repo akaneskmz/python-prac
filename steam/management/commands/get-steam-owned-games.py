@@ -82,9 +82,12 @@ class Command(BaseCommand):
                 game_data["name"] = get_app_name(appid)
 
             # 詳細情報取得
-            if not game_data.get("name") or not game_data.get("header_image") or not game_data.get("price_overview"):
+            if not game_data.get("name") or not game_data.get("header_image") or not game_data.get(
+                    "developers") or not game_data.get("publishers") or not game_data.get("price_overview"):
                 if game_data["appid"] in INVALID_APPS:
                     game_data["header_image"] = INVALID_APPS[appid].get("header_image")
+                    game_data["developers"] = INVALID_APPS[appid].get("developers")
+                    game_data["publishers"] = INVALID_APPS[appid].get("publishers")
                     game_data["price_overview"] = INVALID_APPS[appid].get("price_overview")
                 elif api_count < API_COUNT_MAX:
                     app_details = get_app_details(appid)
@@ -92,6 +95,8 @@ class Command(BaseCommand):
                     if app_details:
                         game_data["name"] = app_details.get("name")
                         game_data["header_image"] = app_details.get("header_image")
+                        game_data["developers"] = app_details.get("developers")
+                        game_data["publishers"] = app_details.get("publishers")
                         # 価格があれば取得
                         if app_details.get("price_overview"):
                             price_overview = {key: app_details.get("price_overview").get(key) for key in
@@ -101,7 +106,7 @@ class Command(BaseCommand):
             new_owned_games["games"].append(game_data)
 
         # データ保存
-        print(f"API remains: {API_COUNT_MAX-api_count}")
+        print(f"API remains: {API_COUNT_MAX - api_count}")
         print(f"size: {len(json.dumps(new_owned_games))}")
         if own:
             own.data = new_owned_games
