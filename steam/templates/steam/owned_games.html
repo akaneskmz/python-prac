@@ -23,7 +23,7 @@
         <td>{{ game.name }}</td>
         <td>{% if game.developers %}{{ game.developers|join:"<br />" }}{% endif %}</td>
         <td>{% if game.publishers %}{{ game.publishers|join:"<br />" }}{% endif %}</td>
-        <td class="text-right">{% if game.price_overview %}{{ game.price_overview.initial|price:game.price_overview.currency }}{% endif %}</td>
+        <td class="text-right text-nowrap">{% if game.price_overview %}{{ game.price_overview.initial|price:game.price_overview.currency }}{% endif %}</td>
     </tr>
     {% endfor %}
     </tbody>
