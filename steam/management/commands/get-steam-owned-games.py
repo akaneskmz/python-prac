@@ -102,6 +102,8 @@ class Command(BaseCommand):
                             price_overview = {key: app_details.get("price_overview").get(key) for key in
                                               ["currency", "initial"]}
                             game_data["price_overview"] = price_overview
+                        else:
+                            game_data["price_overview"] = {'currency': 'N/A'}
 
             new_owned_games["games"].append(game_data)
 
