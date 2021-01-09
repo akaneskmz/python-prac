@@ -11,5 +11,7 @@ def price(val: int, currency: str):
         return "${:,}".format(val / 100)
     elif currency == "EUR":
         return "{:,}€".format(val / 100)
+    elif currency == "N/A":
+        return "N/A"
     else:
         raise ValueError("unknown currency")
