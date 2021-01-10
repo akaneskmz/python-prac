@@ -3,6 +3,10 @@ from django.db import models
 
 # Create your models here.
 
+class LastScreenShots(models.Model):
+    last_screen_shot_time = models.BigIntegerField()
+
+
 class LastUnlockAchievement(models.Model):
     last_unlock_time = models.IntegerField()
 
