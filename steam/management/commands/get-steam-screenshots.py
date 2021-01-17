@@ -52,7 +52,6 @@ class Command(BaseCommand):
                 h3 = detail_soup.select("h3.apphub_responsive_menu_title")
                 a = detail_soup.select("div.screenshotAppName a")
                 game_title = h3[0].text if h3 else a[0].text
-                print(game_title, title)
 
                 img_link = detail_soup.select(".actualmediactn a")
                 img_url = img_link[0].attrs.get("href")
