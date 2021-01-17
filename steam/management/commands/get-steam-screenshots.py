@@ -68,7 +68,7 @@ class Command(BaseCommand):
 
                 media_id = res.json()["media_id"]
                 print(media_id)
-                tweet_params = {'status': f'[{game_title}] {title}', 'media_ids': media_id}
+                tweet_params = {'status': f'{title} [{game_title}]', 'media_ids': media_id}
                 tweet_res = requests.post(TWITTER_STATUS_UPDATE_URL, params=tweet_params, auth=auth)
                 if tweet_res.status_code != 200:
                     print(f"tweet error: {res.text}")
