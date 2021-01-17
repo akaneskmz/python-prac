@@ -1,4 +1,5 @@
 import io
+import re
 import textwrap
 from urllib.parse import unquote
 
@@ -53,7 +54,7 @@ class OwnedGamesView(TemplateView):
     @staticmethod
     def name_sort(x):
         """ゲーム名ソート"""
-        return x.get("name").upper() or ""
+        return re.sub('^(THE|A) ', '', x.get("name").upper()) if x.get("name") else ""
 
     @staticmethod
     def price_sort(x):
