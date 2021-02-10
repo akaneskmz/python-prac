@@ -49,4 +49,4 @@ def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.sticker_id))
-#    line_bot_api.push_message()
+    line_bot_api.push_message(event.source.user_id, TextSendMessage(text="push"))
