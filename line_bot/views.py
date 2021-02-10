@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 class IndexView(View):
     def post(self, request, *args, **kwargs):
-        print(request.body)
+        print(request.body.decode())
         return HttpResponse("OK")
 
     @method_decorator(csrf_exempt)
