@@ -7,3 +7,4 @@ dj-database-url
 Pillow
 requests_oauthlib
 beautifulsoup4
+line-bot-sdk

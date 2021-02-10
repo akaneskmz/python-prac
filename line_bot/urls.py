@@ -1,9 +1,8 @@
 from django.urls import path, include
 
 from django.contrib import admin
-from django.views.generic import RedirectView
 
-admin.autodiscover()
+from line_bot import views
 
 # To add a new path, first import the app:
 # import blog
@@ -14,8 +13,5 @@ admin.autodiscover()
 # Learn more here: https://docs.djangoproject.com/en/2.1/topics/http/urls/
 
 urlpatterns = [
-    path("", RedirectView.as_view(url="steam/")),
-    path("steam/", include('steam.urls'), name="steam"),
-    path("line_bot/", include('line_bot.urls'), name="line_bot"),
-    path("admin/", admin.site.urls),
+    path("callback", views.IndexView.as_view(), name="index"),
 ]
