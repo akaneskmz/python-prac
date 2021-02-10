@@ -29,6 +29,7 @@ class IndexView(View):
         try:
             handler.handle(body, signature)
         except InvalidSignatureError:
+            print("InvalidSignatureError")
             return HttpResponseBadRequest()
 
         return HttpResponse("OK")
@@ -40,6 +41,8 @@ class IndexView(View):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    print(f"event.reply_token = {event.reply_token}")
+    print(f"event.message = {event.message}")
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.stickerId))
