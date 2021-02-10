@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 # 環境変数取得
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextSendMessage, StickerMessage
 
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
@@ -39,7 +39,7 @@ class IndexView(View):
         return super(IndexView, self).dispatch(*args, **kwargs)
 
 
-@handler.add(MessageEvent, message=TextMessage)
+@handler.add(MessageEvent, message=StickerMessage)
 def handle_message(event):
     print(f"event.reply_token = {event.reply_token}")
     print(f"event.message = {event.message}")
