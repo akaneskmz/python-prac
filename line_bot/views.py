@@ -42,6 +42,8 @@ class IndexView(View):
 @handler.add(MessageEvent, message=StickerMessage)
 def handle_message(event):
     print(event)
+    print(event.source)
+    print(event.source.user_id)
     print(f"event.reply_token = {event.reply_token}")
     print(f"event.message = {event.message}")
     line_bot_api.reply_message(
