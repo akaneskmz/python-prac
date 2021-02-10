@@ -42,7 +42,7 @@ class IndexView(View):
 @handler.add(MessageEvent, message=StickerMessage)
 def handle_message(event):
     print(f"event.reply_token = {event.reply_token}")
-    print(f"event.message = {event.message}")
+    print(f"event.message['stickerId'] = {event.message['stickerId']}")
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message["stickerId"]))
