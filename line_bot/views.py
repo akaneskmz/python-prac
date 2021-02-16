@@ -22,7 +22,6 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 class IndexView(View):
     def post(self, request, *args, **kwargs):
         signature = request.headers['X-Line-Signature']
-        print(signature)
         body = request.body.decode()
 
         # handle webhook body
@@ -59,6 +58,8 @@ def handle_text_message(event):
     rich_menu_list = line_bot_api.get_rich_menu_list()
     print(type(rich_menu_list))
     print(rich_menu_list)
+    print(event.source.user_id)
+    line_bot_api.link_rich_menu_to_user(event.source.user_id, "richmenu-c1de37420fa93446ac77f889197c11ef")
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="text"))
