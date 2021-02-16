@@ -59,7 +59,10 @@ def handle_text_message(event):
     print(type(rich_menu_list))
     print(rich_menu_list)
     print(event.source.user_id)
-    line_bot_api.link_rich_menu_to_user(event.source.user_id, "richmenu-c1de37420fa93446ac77f889197c11ef")
+    if event.message.text == "テキスト2":
+        line_bot_api.link_rich_menu_to_user(event.source.user_id, "richmenu-c1de37420fa93446ac77f889197c11ef")
+    else:
+        line_bot_api.link_rich_menu_to_user(event.source.user_id, 'richmenu-a1bb923927925bcda05bec5d9787e58e')
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="text"))
