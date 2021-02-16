@@ -40,7 +40,8 @@ class IndexView(View):
 
 
 @handler.add(MessageEvent, message=StickerMessage)
-def handle_message(event):
+def handle_sticker_message(event):
+    """スタンプメッセージへの返答"""
     print(event)
     print(event.source)
     print(event.source.user_id)
@@ -49,16 +50,15 @@ def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.sticker_id))
-    line_bot_api.push_message(event.source.user_id, TextSendMessage(text="push"))
+    # line_bot_api.push_message(event.source.user_id, TextSendMessage(text="push"))
 
 
 @handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-#     print(event)
-#     print(event.source)
-#     print(event.source.user_id)
-#     print(f"event.reply_token = {event.reply_token}")
-#     print(f"event.message = {event.message}")
+def handle_text_message(event):
+    """テキストメッセージへの返答"""
+    rich_menu_list = line_bot_api.get_rich_menu_list()
+    print(type(rich_menu_list))
+    print(rich_menu_list)
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="text"))
