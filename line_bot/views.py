@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 # 環境変数取得
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextSendMessage, StickerMessage
+from linebot.models import MessageEvent, TextSendMessage, StickerMessage, TextMessage
 
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ.get("YOUR_CHANNEL_ACCESS_TOKEN", "")
 YOUR_CHANNEL_SECRET = os.environ.get("YOUR_CHANNEL_SECRET", "")
@@ -50,3 +50,15 @@ def handle_message(event):
         event.reply_token,
         TextSendMessage(text=event.message.sticker_id))
     line_bot_api.push_message(event.source.user_id, TextSendMessage(text="push"))
+
+
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+#     print(event)
+#     print(event.source)
+#     print(event.source.user_id)
+#     print(f"event.reply_token = {event.reply_token}")
+#     print(f"event.message = {event.message}")
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text="text"))
