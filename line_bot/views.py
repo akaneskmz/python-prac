@@ -1,3 +1,4 @@
+import json
 import os
 
 from django.http import HttpResponse, HttpResponseBadRequest
@@ -56,10 +57,13 @@ def handle_sticker_message(event):
 def handle_text_message(event):
     """テキストメッセージへの返答"""
     rich_menu_list = line_bot_api.get_rich_menu_list()
-    print(type(rich_menu_list))
     print(rich_menu_list)
     print(event.source.user_id)
-    if event.message.text == "テキスト2":
+    if event.message.text == "プロフィール":
+        line_bot_api.reply_message(event.reply_token,
+                                   json.dumps(json.loads(str(line_bot_api.get_profile(event.source.user_id))),
+                                              indent=2))
+    elif event.message.text == "テキスト2":
         line_bot_api.link_rich_menu_to_user(event.source.user_id, "richmenu-c1de37420fa93446ac77f889197c11ef")
     else:
         line_bot_api.link_rich_menu_to_user(event.source.user_id, 'richmenu-a1bb923927925bcda05bec5d9787e58e')
