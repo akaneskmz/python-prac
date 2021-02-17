@@ -24,6 +24,7 @@ class IndexView(View):
     def post(self, request, *args, **kwargs):
         signature = request.headers['X-Line-Signature']
         body = request.body.decode()
+        print(f"body = {body}")
 
         # handle webhook body
         try:
