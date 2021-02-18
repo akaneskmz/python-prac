@@ -50,7 +50,7 @@ def handle_sticker_message(event):
     print(f"event.message = {event.message}")
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.sticker_id))
+        TextSendMessage(text=json.dumps(json.loads(str(event.message)), indent=2)))
     # line_bot_api.push_message(event.source.user_id, TextSendMessage(text="push"))
 
 
