@@ -55,14 +55,22 @@ def achieve_unlock_tweet(last_unlock_time):
         print(new_achieve)
         name_font = ImageFont.truetype('./steam/fonts/meiryob003.ttf', 18)
         description_font = ImageFont.truetype('./steam/fonts/meiryo003.ttf', 12)
+        # ツイート用タグ
         tag = f"\n #{TWEET_ACHIEVE_TAG}" if TWEET_ACHIEVE_TAG else ""
-        games = [key for key, item in dict.fromkeys([a.app.name for a in new_achieve]).items()]
+        games = [key for key, item in dict.fromkeys([a.app for a in new_achieve]).items()]
         print(games)
 
         for game in games:
             sort_key = lambda x: x.unlock_time
-            achieves = sorted([a for a in new_achieve if a.app.name == game], key=sort_key)
+            achieves = sorted([a for a in new_achieve if a.app == game], key=sort_key)
+
+            # 実績数カウント
             achieve_num = len(achieves)
+            achieve_num_current = Achievement.objects.filter(app=game, achieved=True).count()
+            achieve_num_total = Achievement.objects.filter(app=game).count()
+            # 進捗テキスト
+            progress = f"{achieve_num_current}/{achieve_num_total}(+{achieve_num})"
+
             im = Image.new("RGB", (950, 78 * achieve_num), (11, 19, 23))
             draw = ImageDraw.Draw(im)
             for i, achieve in enumerate(achieves):
@@ -99,7 +107,7 @@ def achieve_unlock_tweet(last_unlock_time):
 
             media_id = res.json()["media_id"]
             print(media_id)
-            tweet_params = {'status': f'{game}の実績を解除しました。{tag}', 'media_ids': media_id}
+            tweet_params = {'status': f'{game.name}の実績を解除しました。{progress}{tag}', 'media_ids': media_id}
             tweet_res = requests.post(TWITTER_STATUS_UPDATE_URL, params=tweet_params, auth=auth)
             if tweet_res.status_code != 200:
                 print(f"tweet error: {res.text}")
