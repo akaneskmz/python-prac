@@ -24,6 +24,7 @@ class IndexView(View):
     def post(self, request, *args, **kwargs):
         signature = request.headers['X-Line-Signature']
         body = request.body.decode()
+        print(f"header = {request.headers}")
         print(f"body = {body}")
 
         # handle webhook body
@@ -43,9 +44,6 @@ class IndexView(View):
 @handler.add(MessageEvent, message=StickerMessage)
 def handle_sticker_message(event):
     """スタンプメッセージへの返答"""
-    print(event)
-    print(event.source)
-    print(event.source.user_id)
     print(f"event.reply_token = {event.reply_token}")
     print(f"event.message = {event.message}")
     line_bot_api.reply_message(
