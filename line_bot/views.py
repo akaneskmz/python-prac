@@ -78,7 +78,7 @@ def handle_text_message(event):
                                                                                                                  MessageAction(
                                                                                                                      label="ああああああああああああああ",
                                                                                                                      text="text2")])), TemplateSendMessage(alt_text="alt_text",
-                                                                                    template=ButtonsTemplate(text="半角23～26文字",
+                                                                                    template=ButtonsTemplate(text="半角17～20文字",
                                                                                                              actions=[
                                                                                                                  MessageAction(
                                                                                                                      label="ABCDEFGHIJKLMNOPQ",
