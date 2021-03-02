@@ -64,7 +64,7 @@ def handle_text_message(event):
             TextSendMessage(text=json.dumps(json.loads(str(line_bot_api.get_profile(event.source.user_id))), indent=2)),
             TemplateSendMessage(alt_text="alt_text", template=ButtonsTemplate(text="テキスト", title="タイトル", actions=[
                 MessageAction(label="label1", text="text1")])), TemplateSendMessage(alt_text="alt_text",
-                                                                                    template=ButtonsTemplate(text=" ",
+                                                                                    template=ButtonsTemplate(text="全角11～14文字",
                                                                                                              actions=[
                                                                                                                  MessageAction(
                                                                                                                      label="あああああああああああ",
@@ -77,6 +77,20 @@ def handle_text_message(event):
                                                                                                                      text="text2"),
                                                                                                                  MessageAction(
                                                                                                                      label="ああああああああああああああ",
+                                                                                                                     text="text2")])), TemplateSendMessage(alt_text="alt_text",
+                                                                                    template=ButtonsTemplate(text="半角23～26文字",
+                                                                                                             actions=[
+                                                                                                                 MessageAction(
+                                                                                                                     label="ABCDEFGHIJKLMNOPQRSTUUW",
+                                                                                                                     text="text2"),
+                                                                                                                 MessageAction(
+                                                                                                                     label="ABCDEFGHIJKLMNOPQRSTUUWX",
+                                                                                                                     text="text2"),
+                                                                                                                 MessageAction(
+                                                                                                                     label="ABCDEFGHIJKLMNOPQRSTUUWXY",
+                                                                                                                     text="text2"),
+                                                                                                                 MessageAction(
+                                                                                                                     label="ABCDEFGHIJKLMNOPQRSTUUWXYZ",
                                                                                                                      text="text2")]))])
     elif event.message.text == "テキスト2":
         line_bot_api.link_rich_menu_to_user(event.source.user_id, "richmenu-c1de37420fa93446ac77f889197c11ef")
