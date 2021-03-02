@@ -64,7 +64,7 @@ def handle_text_message(event):
             TextSendMessage(text=json.dumps(json.loads(str(line_bot_api.get_profile(event.source.user_id))), indent=2)),
             TemplateSendMessage(alt_text="alt_text", template=ButtonsTemplate(text="テキスト", title="タイトル", actions=[
                 MessageAction(label="label1", text="text1")])),
-            TemplateSendMessage(alt_text="alt_text", template=ButtonsTemplate(actions=[
+            TemplateSendMessage(alt_text="alt_text", template=ButtonsTemplate(text="", actions=[
                 MessageAction(label="label2", text="text2")]))])
     elif event.message.text == "テキスト2":
         line_bot_api.link_rich_menu_to_user(event.source.user_id, "richmenu-c1de37420fa93446ac77f889197c11ef")
