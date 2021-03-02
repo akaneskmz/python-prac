@@ -81,16 +81,16 @@ def handle_text_message(event):
                                                                                     template=ButtonsTemplate(text="半角23～26文字",
                                                                                                              actions=[
                                                                                                                  MessageAction(
-                                                                                                                     label="ABCDEFGHIJKLMNOPQRSTUUW",
+                                                                                                                     label="ABCDEFGHIJKLMNOPQ",
                                                                                                                      text="text2"),
                                                                                                                  MessageAction(
-                                                                                                                     label="ABCDEFGHIJKLMNOPQRSTUUWX",
+                                                                                                                     label="ABCDEFGHIJKLMNOPQR",
                                                                                                                      text="text2"),
                                                                                                                  MessageAction(
-                                                                                                                     label="ABCDEFGHIJKLMNOPQRSTUUWXY",
+                                                                                                                     label="ABCDEFGHIJKLMNOPQRS",
                                                                                                                      text="text2"),
                                                                                                                  MessageAction(
-                                                                                                                     label="ABCDEFGHIJKLMNOPQRSTUUWXYZ",
+                                                                                                                     label="ABCDEFGHIJKLMNOPQRST",
                                                                                                                      text="text2")]))])
     elif event.message.text == "テキスト2":
         line_bot_api.link_rich_menu_to_user(event.source.user_id, "richmenu-c1de37420fa93446ac77f889197c11ef")
