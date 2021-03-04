@@ -63,39 +63,41 @@ def handle_text_message(event):
         line_bot_api.reply_message(event.reply_token, [
             TextSendMessage(text=json.dumps(json.loads(str(line_bot_api.get_profile(event.source.user_id))), indent=2)),
             TemplateSendMessage(alt_text="alt_text", template=ButtonsTemplate(text="テキスト", title="タイトル", actions=[
-                MessageAction(label="label1", text="text1")])), TemplateSendMessage(alt_text="alt_text",
-                                                                                    template=ButtonsTemplate(text="全角11～14文字",
-                                                                                                             actions=[
-                                                                                                                 MessageAction(
-                                                                                                                     label="あああああああああああ",
-                                                                                                                     text="text2"),
-                                                                                                                 MessageAction(
-                                                                                                                     label="ああああああああああああ",
-                                                                                                                     text="text2"),
-                                                                                                                 MessageAction(
-                                                                                                                     label="あああああああああああああ",
-                                                                                                                     text="text2"),
-                                                                                                                 MessageAction(
-                                                                                                                     label="ああああああああああああああ",
-                                                                                                                     text="text2")])), TemplateSendMessage(alt_text="alt_text",
-                                                                                    template=ButtonsTemplate(text="半角17～20文字",
-                                                                                                             actions=[
-                                                                                                                 MessageAction(
-                                                                                                                     label="ABCDEFGHIJKLMNOPQ",
-                                                                                                                     text="text2"),
-                                                                                                                 MessageAction(
-                                                                                                                     label="ABCDEFGHIJKLMNOPQR",
-                                                                                                                     text="text2"),
-                                                                                                                 MessageAction(
-                                                                                                                     label="ABCDEFGHIJKLMNOPQRS",
-                                                                                                                     text="text2"),
-                                                                                                                 MessageAction(
-                                                                                                                     label="ABCDEFGHIJKLMNOPQRST",
-                                                                                                                     text="text2")]))])
+                MessageAction(label="label1", text="text1")])),
+            TemplateSendMessage(alt_text="alt_text",
+                                template=ButtonsTemplate(text="全角11～14文字",
+                                                         actions=[
+                                                             MessageAction(
+                                                                 label="あああああああああああ",
+                                                                 text="text2"),
+                                                             MessageAction(
+                                                                 label="ああああああああああああ",
+                                                                 text="text2"),
+                                                             MessageAction(
+                                                                 label="あああああああああああああ",
+                                                                 text="text2"),
+                                                             MessageAction(
+                                                                 label="ああああああああああああああ",
+                                                                 text="text2")])),
+            TemplateSendMessage(alt_text="alt_text",
+                                template=ButtonsTemplate(text="半角17～20文字",
+                                                         actions=[
+                                                             MessageAction(
+                                                                 label="ABCDEFGHIJKLMNOPQ",
+                                                                 text="text2"),
+                                                             MessageAction(
+                                                                 label="ABCDEFGHIJKLMNOPQR",
+                                                                 text="text2"),
+                                                             MessageAction(
+                                                                 label="ABCDEFGHIJKLMNOPQRS",
+                                                                 text="text2"),
+                                                             MessageAction(
+                                                                 label="ABCDEFGHIJKLMNOPQRST",
+                                                                 text="text2")]))])
     elif event.message.text == "テキスト2":
         line_bot_api.link_rich_menu_to_user(event.source.user_id, "richmenu-c1de37420fa93446ac77f889197c11ef")
     else:
-        line_bot_api.link_rich_menu_to_user(event.source.user_id, 'richmenu-a1bb923927925bcda05bec5d9787e58e')
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text="text"))
+        line_bot_api.link_rich_menu_to_user(event.source.user_id, 'richmenu-137e7804b4e645433a8780730a7e6cce')
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="text"))
