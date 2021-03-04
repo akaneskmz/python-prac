@@ -58,6 +58,7 @@ def handle_postback(event):
     """スタンプメッセージへの返答"""
     print(f"event.reply_token = {event.reply_token}")
     print(f"event.postback = {event.postback}")
+    print(f"event.source = {event.source}")
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=json.dumps(json.loads(str(event.postback)), indent=2)))
@@ -108,7 +109,7 @@ def handle_text_message(event):
     elif event.message.text == "テキスト2":
         line_bot_api.link_rich_menu_to_user(event.source.user_id, "richmenu-c1de37420fa93446ac77f889197c11ef")
     else:
-        line_bot_api.link_rich_menu_to_user(event.source.user_id, 'richmenu-137e7804b4e645433a8780730a7e6cce')
+        line_bot_api.link_rich_menu_to_user(event.source.user_id, 'richmenu-c2d35fec497295933f52a92a7387c890')
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="text"))
