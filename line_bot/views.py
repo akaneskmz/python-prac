@@ -58,6 +58,8 @@ def handle_postback(event):
     """スタンプメッセージへの返答"""
     print(f"event.reply_token = {event.reply_token}")
     print(f"event.postback = {event.postback}")
+    print(f"event.postback.data = {event.postback.data}")
+    print(f"event.postback.params = {event.postback.params}")
     print(f"event.source = {event.source}")
     line_bot_api.reply_message(
         event.reply_token,
