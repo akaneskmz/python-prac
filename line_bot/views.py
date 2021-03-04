@@ -63,7 +63,7 @@ def handle_postback(event):
     print(f"event.source = {event.source}")
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=json.dumps(json.loads(str(event.postback)), indent=2)))
+        TextSendMessage(text=json.dumps(json.loads(event.postback.data), indent=2)))
     # line_bot_api.push_message(event.source.user_id, TextSendMessage(text="push"))
 
 
@@ -111,7 +111,7 @@ def handle_text_message(event):
     elif event.message.text == "テキスト2":
         line_bot_api.link_rich_menu_to_user(event.source.user_id, "richmenu-c1de37420fa93446ac77f889197c11ef")
     else:
-        line_bot_api.link_rich_menu_to_user(event.source.user_id, 'richmenu-c2d35fec497295933f52a92a7387c890')
+        line_bot_api.link_rich_menu_to_user(event.source.user_id, 'richmenu-d00f0b8536f5e6f0e62fff2bfc528895')
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="text"))
