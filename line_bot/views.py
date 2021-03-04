@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextSendMessage, StickerMessage, TextMessage, TemplateSendMessage, \
-    ButtonsTemplate, MessageAction
+    ButtonsTemplate, MessageAction, PostbackEvent
 
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ.get("YOUR_CHANNEL_ACCESS_TOKEN", "")
 YOUR_CHANNEL_SECRET = os.environ.get("YOUR_CHANNEL_SECRET", "")
@@ -50,6 +50,17 @@ def handle_sticker_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=json.dumps(json.loads(str(event.message)), indent=2)))
+    # line_bot_api.push_message(event.source.user_id, TextSendMessage(text="push"))
+
+
+@handler.add(PostbackEvent)
+def handle_postback(event):
+    """スタンプメッセージへの返答"""
+    print(f"event.reply_token = {event.reply_token}")
+    print(f"event.postback = {event.postback}")
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=json.dumps(json.loads(str(event.postback)), indent=2)))
     # line_bot_api.push_message(event.source.user_id, TextSendMessage(text="push"))
 
 
