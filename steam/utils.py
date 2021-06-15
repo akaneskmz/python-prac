@@ -117,7 +117,7 @@ def achieve_unlock_tweet(last_unlock_time):
                 'media_ids': media_id}
             tweet_res = requests.post(TWITTER_STATUS_UPDATE_URL, params=tweet_params, auth=auth)
             if tweet_res.status_code != 200:
-                print(f"tweet error: {res.text}")
+                print(f"tweet error: {tweet_res.status_code} {tweet_res.text}")
                 return False
 
         # 正常終了
