@@ -97,6 +97,10 @@ def achieve_unlock_tweet(last_unlock_time):
                 draw.text((932 - unlock_time_text_size[0], offset_y + 7 + 25), unlock_time_text, fill=(137, 137, 137),
                           font=description_font)
 
+            # 画像の高さが大きすぎる場合リサイズ
+            if im.height > 8192:
+                im = im.resize((int(float(im.width) / (float(im.height / 8192.0))), 8192))
+
             # 画像一時保存
             fp = io.BytesIO()
             im.save(fp, format="PNG")
