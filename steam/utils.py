@@ -86,7 +86,7 @@ def achieve_unlock_tweet(last_unlock_time):
                 temp_io.write(icon.content)
                 icon_im = Image.open(temp_io)
                 # アイコン貼り付け # 大きいアイコンに対応する
-                im.paste(icon_im, (12, offset_y + 7))
+                im.paste(icon_im.resize((64, 64)), (12, offset_y + 7))
                 # 枠
                 draw.rectangle((83, offset_y + 7, 938, offset_y + 71), fill=(8, 12, 17), width=0)
 
