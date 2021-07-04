@@ -17,5 +17,6 @@ urlpatterns = [
     path("", RedirectView.as_view(url="steam/")),
     path("steam/", include('steam.urls'), name="steam"),
     path("line_bot/", include('line_bot.urls'), name="line_bot"),
+    path("kindle_share/", include('kindle_share.urls'), name="kindle_share"),
     path("admin/", admin.site.urls),
 ]
